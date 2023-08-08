@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Message</h1>
+<div mat-dialog-content>
+    <p>Downloading employee data. Please confirm!</p>
+    <h5>Keep the file safe</h5>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Download</button>
+</div>
