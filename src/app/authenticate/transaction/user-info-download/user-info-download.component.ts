@@ -39,7 +39,6 @@ export class UserInfoDownloadComponent {
       this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
     })
   }
-
   openDialogForDownloadConfirmation(): void {
     const dialogRef = this.dialog.open(DownloadConfirmationDialogboxComponent, {
       data: {},
