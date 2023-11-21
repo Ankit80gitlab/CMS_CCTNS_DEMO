@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { loggedInDialogData } from 'src/app/app.component';
+import { loginMsg } from 'src/app/authenticate/common/dashboard/dashboard.component';
+
 
 
 @Component({
@@ -10,8 +11,9 @@ import { loggedInDialogData } from 'src/app/app.component';
 })
 export class LoginDialogBoxComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: loggedInDialogData) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: loginMsg) { }
 
   ngOnInit() {
   }
+
 }

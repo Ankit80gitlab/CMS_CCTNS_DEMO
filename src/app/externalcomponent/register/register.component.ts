@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { RegistrationDialogboxComponent } from 'src/app/dialogbox/registration-dialogbox/registration-dialogbox.component';
-import { userData } from 'src/app/models/employee';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { userData } from 'src/app/models/user';
+import { RegistrationService } from 'src/app/services/registration.service';
+
 
 interface Location {
   value: string;
   viewValue: string;
-}
-
-export interface registration {
-  generatedUserId2: any;
 }
 
 @Component({
@@ -20,11 +15,15 @@ export interface registration {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
+
 export class RegisterComponent {
 
-  constructor(private authServ: AuthenticationService, private dialog: MatDialog, private router: Router) { }
+  constructor(private regServ:RegistrationService, private router:Router){}
 
-  generatedUserId: any;
+  ngOnInit(){
+    this.isUserRegistered=false;
+  }
 
   location: Location[] = [
     { value: 'mumbai', viewValue: 'Mumbai' },
@@ -39,12 +38,7 @@ export class RegisterComponent {
     "location": new FormControl('', [Validators.required])
   })
 
-  ngOnInit() {
-    //this.check2();
-    this.isUserRegistered=false;
-
-  }
-
+  generatedUserId: any;
   isUserRegistered:boolean=false;
 
   register() {
@@ -64,7 +58,7 @@ export class RegisterComponent {
 
     let userData: Array<userData> = [];
     //let duplicateUserId = "KA597962656";
-    this.authServ.fetchAllUser().subscribe(resp => {
+    this.regServ.fetchAllUser().subscribe(resp => {
       for (let i of resp) {
         userData.push(i);
       }
@@ -76,7 +70,7 @@ export class RegisterComponent {
       }
       if (!duplicate) {
         console.log(this.generatedUserId);
-        this.authServ.register({
+        this.regServ.register({
           "name": this.signUpForm.getRawValue().name,
           "email": this.signUpForm.getRawValue().email,
           "userid": this.generatedUserId,
@@ -84,35 +78,14 @@ export class RegisterComponent {
           "role": "user",
           "location": this.signUpForm.getRawValue().location
         }).subscribe(resp => {
-          //console.log(resp);
-          this.openDialogForRegistration();
+          console.log(resp);
           this.isUserRegistered=true;
+          alert("You have successfully registered with user id "+this.generatedUserId);
           this.router.navigateByUrl("cctns/login");
         })
       } else {
         alert("Duplicate user id found")
         this.signUpForm.reset();
-      }
-    })
-  }
-
-  dataArray: Array<any> = [];
-
-  openDialogForRegistration() {
-    this.dialog.open(RegistrationDialogboxComponent, {
-      data: { generatedUserId2: this.generatedUserId },
-    });
-  }
-
-  check2() {
-    //this.router.navigateByUrl('/login');
-    this.authServ.fetchAllUser().subscribe(resp => {
-      for (let i of resp) {
-        this.dataArray.push(i);
-      }
-      for (let j of this.dataArray) {
-        console.log(j.userid);
-
       }
     })
   }

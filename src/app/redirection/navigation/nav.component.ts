@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Menu } from '../../models/Menu';
 import { AppComponent } from '../../app.component';
 import { MenuService } from '../../services/menu.service';
+import { IdleLogoutDialogComponent } from 'src/app/dialogbox/idle-logout-dialog/idle-logout-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LogoutDialogboxComponent } from 'src/app/dialogbox/logout-dialogbox/logout-dialogbox.component';
+import { LogoutDialogBoxComponent } from 'src/app/dialogbox/logout-dialog-box/logout-dialog-box.component';
 
-export interface logOutData {
-  result: string;
+export interface logout {
 }
 
 @Component({
@@ -20,43 +20,38 @@ export class NavComponent {
   form!: FormGroup;
   name = 'Angular ';
   menu: Menu[];
-
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private appcom: AppComponent,
     private menuservice: MenuService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog
+  ) {
     this.menu = JSON.parse(sessionStorage.getItem("userMenu") || "");
   }
 
-  logoutConfirmed() {
-    localStorage.removeItem('name');
-    localStorage.removeItem('role');
-    localStorage.removeItem('location');
-    sessionStorage.removeItem("LoginValue");
-    sessionStorage.removeItem('userMenu');
-    window.location.href = "cctns/login";
-    this.form.reset();
+  logout() {
+    this.openDialogForLogout();
   }
 
-  logout(): void {
-    const dialogRef = this.dialog.open(LogoutDialogboxComponent, {
-      data: { name: "false" },
+  openDialogForLogout(): void {
+    const dialogRef = this.dialog.open(LogoutDialogBoxComponent, {
+      data: {},
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
-
       if (result) {
-        console.log("logging out");
-        this.logoutConfirmed();
-
+        console.log("download req confirmed " + result);
+        sessionStorage.removeItem("LoginValue");
+        localStorage.removeItem("welcome");
+        localStorage.removeItem("name");
+        localStorage.removeItem("role");
+        window.location.href = "cctns/login";
+        this.form.reset();
       } else {
-        console.log("user denied");
+        console.log("download req denied " + result);
       }
     });
   }
+
 }

@@ -2,9 +2,15 @@
     <div>
         <h3 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;margin-left: 20px;">Add
             General Diary:
+
+            <!-- <input placeholder="enter something to send to gd view component" #inp>
+            &nbsp;<button type="submit" (click)="send(inp.value)">Send</button>
+            <br><small>data will be sent to gd view component using shared services</small> -->
             <hr />
+            
         </h3>
         <table style="height:100%; margin-left: 20px;">
+
             <tr>
                 <td colspan="4"
                     style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-size: 20px;">
@@ -17,12 +23,12 @@
             </tr>
             <tr>
                 <td style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Select</td>
-                <td>:One<input type="radio">Other <input type="radio"></td>
+                <td>:One<input type="radio" value="one" #op1>&nbsp; Other<input type="radio" value="other" #op2></td>
             </tr>
             <tr>
                 <td style="font-family: Impact, Haettenschweiler, ' Narrow Bold', sans-serif; width: 25%;">General Diary
                     Type:</td>
-                <td style="width: 25%;"><select>
+                <td style="width: 25%;"><select #gdt>
                         <option>----------Select----------</option>
                         <option>Arrival</option>
                         <option>Departure</option>
@@ -36,31 +42,40 @@
             <tr>
                 <td style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">General Diary
                     Subtype:</td>
-                <td><select>
+                <td><select #gds>
                         <option>----------Select----------</option>
-                        <option></option>
+                        <option>Arrival</option>
+                        <option>Departure</option>
+                        <option>Administrative</option>
+                        <option>Inquiry / Registration</option>
+                        <option>Preventive Action</option>
                     </select>
                 </td>
-                <td rowspan="4" style="width: 50%;"><textarea style="width: 600px;height: 100px;"></textarea></td>
+                <td rowspan="4" style="width: 50%;"><textarea style="width: 600px;height: 100px;" #summ></textarea></td>
             </tr>
             <tr>
                 <td style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Entry (For Officer)
                 </td>
-                <td><select>
+                <td><select #efo>
                         <option>----------Select----------</option>
+                        <option>option 1</option>
+                        <option>option 2</option>
+                        <option>option 3</option>
+                        <option>option 4</option>
+                        
 
                     </select></td>
             </tr>
             <tr>
                 <td style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Subject:</td>
-                <td><textarea style="width: 200px;height: 60px;"></textarea>
+                <td><textarea style="width: 200px;height: 60px;" #sub></textarea>
             </tr>
 
         </table>
 
     </div>
     <div style="text-align: center;">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="submit(op1.value,gdt.value,gds.value,efo.value,sub.value,summ.value)">
             Submit
         </button>
 
@@ -72,3 +87,4 @@
         </button>
     </div>
 </form>
+<br>

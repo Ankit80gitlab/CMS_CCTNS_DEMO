@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../../../app.component';
+import { TimeoutService } from 'src/app/services/timeout.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-gdentryview',
@@ -10,15 +12,16 @@ import { AppComponent } from '../../../app.component';
 
 
 export class GdentryviewComponent {
-  url:string="";
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private appcom:AppComponent, 
-  ) { 
-    
+
+  general_diary:any=[];
+
+  constructor(private timeoutServ:TimeoutService, private sharedServ:SharedService){}
+
+  ngOnInit() {
+    // this.timeoutServ.stopIdle();
+    // this.timeoutServ.configureIdleLogout();
+    this.general_diary = this.sharedServ.getMessage();     
   }
-  ngOnInit() {   
-}
+  
 }
 
